@@ -1,3 +1,7 @@
+# Installing craco 
+# Needed to run our app
+https://www.npmjs.com/package/@craco/craco#installation
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
