@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {useNavigate} from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import {
   auth,
@@ -12,6 +13,12 @@ export default function RegisterWindow() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [user, loading, error] = useAuthState(auth)
+
+  // testing redirect
+  let navigate = useNavigate();
+  let home = () => {
+    navigate("/");
+  }
 
   const register = () => {
     if (!name) alert("Please enter name");
@@ -27,7 +34,7 @@ export default function RegisterWindow() {
                 Register
             </h2>
           </div>
-          <form className="mt-8 space-y-6" action="/" method="POST">
+          <div className="mt-8 space-y-6" action="/" method="POST">
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
@@ -81,14 +88,14 @@ export default function RegisterWindow() {
             </div>
             <div>
               <button
-                type="submit"
-                onClick={register}
+                type=""
+                onClick= {register}
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 Register
               </button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </>

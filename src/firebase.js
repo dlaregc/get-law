@@ -1,4 +1,5 @@
 import {initializeApp} from "firebase/app";
+
 import {
     GoogleAuthProvider,
     getAuth,
@@ -22,13 +23,12 @@ import firebase from "firebase/app";
 import "firebase/auth";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCJUapLWud--eNJvMYjO-g-_l6nYvjA9Oo",
-    authDomain: "getlaw-9fe56.firebaseapp.com",
-    databaseURL: "https://getlaw-9fe56-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "getlaw-9fe56",
-    storageBucket: "getlaw-9fe56.appspot.com",
-    messagingSenderId: "1040744007020",
-    appId: "1:1040744007020:web:adee167e3e12d932831f49"
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMIAN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
@@ -105,5 +105,4 @@ export {
     logout,
 };
 
-// export const auth = firebaseConfig.auth();
-// export default firebaseConfig;
+export default app;
