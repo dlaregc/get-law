@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {auth, logInWithEmailAndPassword, signInWithGoogle} from "../../firebase";
 import {useAuthState} from "react-firebase-hooks/auth";
 
@@ -75,16 +75,18 @@ export default function LoginWindow() {
             </div>
 
             <div>
-              <button
-                type=""
-                onClick={() => logInWithEmailAndPassword(email, password)}
-                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                  <LockClosedIcon className="h-5 w-5 text-blue-600 group-hover:text-blue-400" aria-hidden="true" />
-                </span>
-                Sign in
-              </button>
+              <NavLink to = "/">
+                <button
+                  type=""
+                  onClick={() => logInWithEmailAndPassword(email, password)}
+                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                    <LockClosedIcon className="h-5 w-5 text-blue-600 group-hover:text-blue-400" aria-hidden="true" />
+                  </span>
+                  Sign in
+                </button>
+              </NavLink>
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import React, {useContext, createContext} from "react";
 import {NavLink} from "react-router-dom";
 import {auth, logout} from "../firebase";
+import {BookOpenIcon} from "@heroicons/react/solid"; // put into header later
 
 function Header() {
 
@@ -8,32 +9,30 @@ function Header() {
 
     return (
         <div className="static w-full flex justify-between p-4 items-center bg-blue-400">
-            <div className="text-5xl font-bold text-center uppercase text-white drop-shadow-lg">
-                <h1>
-                    <span>
-                        getlaw
-                    </span>
-                </h1>
+            <div>
+                <NavLink to="/" className=" text-5xl text-white font-bold text-center uppercase drop-shadow-lg hover:no-underline hover:text-6xl">
+                    getlaw
+                </NavLink>
             </div>
 
             <nav>
 
-                <ul className="gap-8 p-6">
-                    <li className="text-2xl space-x-4 uppercase text-white font-bold drop-shadow-lg">
-                        <NavLink to = "/">Home</NavLink>
-                        <NavLink to = "/marketplace">Marketplace</NavLink>
+                <ul className="static gap-8 p-6">
+                    <li className="space-x-4 uppercase text-2xl text-white font-bold drop-shadow-lg">
+                        <NavLink to = "/" className="hover:text-blue-600 hover:no-underline">Home</NavLink>
+                        <NavLink to = "/marketplace" className="hover:text-blue-600 hover:no-underline">Marketplace</NavLink>
                         {
                             user &&
                             <>
-                                <NavLink to = "/profile">Profile</NavLink>
-                                <NavLink to = "/" onClick={logout}>Logout</NavLink>
+                                <NavLink to = "/profile" className="hover:text-blue-600 hover:no-underline">Profile</NavLink>
+                                <NavLink to = "/" onClick={logout} className="hover:text-blue-600 hover:no-underline">Logout</NavLink>
                             </>
                         }
                         {
                             !user && 
                             <>
-                                <NavLink to="/login">Login</NavLink>
-                                <NavLink to="/register">Register</NavLink>
+                                <NavLink to="/login" className="hover:text-blue-600 hover:no-underline">Login</NavLink>
+                                <NavLink to="/register" className="hover:text-blue-600 hover:no-underline">Register</NavLink>
                             </>
                         }
                     </li>

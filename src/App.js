@@ -1,5 +1,3 @@
-import './index.css';
-
 import Home from "./pages/homepage/Home";
 
 function App() {
