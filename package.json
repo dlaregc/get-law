@@ -7,7 +7,7 @@
     "npm": "<=8.x.x"
   },
   "dependencies": {
-    "@craco/craco": "^6.4.4",
+    "@craco/craco": "^7.0.0-alpha.0",
     "@heroicons/react": "^1.0.6",
     "@tailwindcss/forms": "^0.5.2",
     "@testing-library/jest-dom": "^5.16.4",
