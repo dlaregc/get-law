@@ -31,10 +31,16 @@ export default function RegisterWindow() {
         setShowErrorMsg(true);
       }
     }
-  }, [confirmPassword]);
+  }, [password, confirmPassword]);
 
   const register = () => {
-    if (!firstName) alert("Please enter first name");
+    if (!firstName) {
+      alert("Please enter first name");
+    }
+
+    if (showErrorMsg) {
+      alert("Please ensure passwords match");
+    }
     registerWithEmailAndPassword(firstName, email, password);
   };
 
@@ -136,7 +142,7 @@ export default function RegisterWindow() {
               </div>
             </div>
 
-            {showErrorMsg && confirmPassword !== "" ? <span className="flex justify-center text-red-500 font-bold sm:text-sm"> Passwords do not match </span> : ""}
+            {showErrorMsg && confirmPassword !== "" && password !== "" ? <span className="flex justify-center text-red-500 font-bold sm:text-sm"> Passwords do not match </span> : ""}
             
             <div>
               <button
