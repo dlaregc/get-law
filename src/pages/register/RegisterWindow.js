@@ -10,8 +10,11 @@ import {
 export default function RegisterWindow() {
 
   const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showErrorMsg, setShowErrorMsg] = useState(true);
   const [user, loading, error] = useAuthState(auth)
 
   // testing redirect
@@ -20,9 +23,19 @@ export default function RegisterWindow() {
     navigate("/");
   }
 
+  useEffect(() => {
+    if (password !== "" && confirmPassword !== "") {
+      if (password === confirmPassword) {
+        setShowErrorMsg(false);
+      } else {
+        setShowErrorMsg(true);
+      }
+    }
+  }, [confirmPassword]);
+
   const register = () => {
-    if (!name) alert("Please enter name");
-    registerWithEmailAndPassword(name, email, password);
+    if (!firstName) alert("Please enter first name");
+    registerWithEmailAndPassword(firstName, email, password);
   };
 
   return (
@@ -30,29 +43,47 @@ export default function RegisterWindow() {
       <div className="flex h-screen items-center justify-center py-12 px-4 sm:px-4 lg:px-4 bg-white">
         <div className="max-w-md w-full space-y-8">
           <div>
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                Register
+            <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
+                Join GetLaw Now
             </h2>
           </div>
           <div className="mt-8 space-y-6" action="/" method="POST">
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
-                <label htmlFor="email-address" className="sr-only">
-                  Name
+                <label htmlFor="first-name" className="sr-only">
+                  First Name
                 </label>
                 <input
-                  id="email-address"
-                  name="name"
-                  type="name"
-                  autoComplete="name"
+                  id="First Name"
+                  name="First Name"
+                  type="First Name"
+                  autoComplete="First Name"
                   // required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                  placeholder="Full Name"
+                  placeholder="First Name"
                 />
               </div>
+
+              <div>
+                <label htmlFor="last-name" className="sr-only">
+                  Last Name
+                </label>
+                <input
+                  id="Last Name"
+                  name="Last Name"
+                  type="Last Name"
+                  autoComplete="Last Name"
+                  // required
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                  placeholder="Last Name"
+                />
+              </div>
+
               <div>
                 <label htmlFor="password" className="sr-only">
                   Email
@@ -66,11 +97,11 @@ export default function RegisterWindow() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                  placeholder="email"
+                  placeholder="Email"
                 />
               </div>
-            </div>
-            <div>
+
+              <div>
                 <label htmlFor="password" className="sr-only">
                   Password
                 </label>
@@ -78,14 +109,35 @@ export default function RegisterWindow() {
                   id="password"
                   name="password"
                   type="password"
-                  autoComplete="current-password"
+                  autoComplete="password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                  placeholder="password"
+                  placeholder="Password"
                 />
+              </div>
+
+              <div>
+                <label htmlFor="confirm-password" className="sr-only">
+                  Confirm Password
+                </label>
+                <input
+                  id="confirmpassword"
+                  name="confirmPassword"
+                  type="password"
+                  autoComplete="confirm-password"
+                  required
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                  placeholder="Confirm Password"
+                />
+              </div>
             </div>
+
+            {showErrorMsg && confirmPassword !== "" ? <span className="flex justify-center text-red-500 font-bold sm:text-sm"> Passwords do not match </span> : ""}
+            
             <div>
               <button
                 type=""
