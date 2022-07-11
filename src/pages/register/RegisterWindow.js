@@ -1,44 +1,52 @@
 import React, { useEffect, useState } from "react";
-import {useNavigate} from "react-router-dom";
-import { useAuthState } from "react-firebase-hooks/auth";
-import {
-  auth,
-  registerWithEmailAndPassword,
-  signInWithGoogle,
-} from "../../firebase";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { auth, registerWithEmailAndPassword } from "../../firebase";
 
 export default function RegisterWindow() {
 
   const [email, setEmail] = useState("");
+  const [confirmEmail, setConfirmEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [showErrorMsg, setShowErrorMsg] = useState(true);
-  const [user, loading, error] = useAuthState(auth)
+  const [showErrorMsgPassword, setShowErrorMsgPassword] = useState(true);
+  const [showErrorMsgEmail, setShowErrorMsgEmail] = useState(true);
+  const [
+    createUserWithEmailAndPassword,
+    user, 
+    loading, 
+    error
+  ] = useCreateUserWithEmailAndPassword(auth);
 
-  // testing redirect
-  let navigate = useNavigate();
-  let home = () => {
-    navigate("/");
-  }
-
+  // Matching password
   useEffect(() => {
     if (password !== "" && confirmPassword !== "") {
       if (password === confirmPassword) {
-        setShowErrorMsg(false);
+        setShowErrorMsgPassword(false);
       } else {
-        setShowErrorMsg(true);
+        setShowErrorMsgPassword(true);
       }
     }
   }, [password, confirmPassword]);
+
+  // Matching email 
+  useEffect(() => {
+    if (email !== "" && confirmEmail !== "") {
+      if (email === confirmEmail) {
+        setShowErrorMsgEmail(false);
+      } else {
+        setShowErrorMsgEmail(true);
+      }
+    }
+  }, [email, confirmEmail]);
 
   const register = () => {
     if (!firstName) {
       alert("Please enter first name");
     }
 
-    if (showErrorMsg) {
+    if (showErrorMsgPassword) {
       alert("Please ensure passwords match");
     }
     registerWithEmailAndPassword(firstName, email, password);
@@ -142,7 +150,7 @@ export default function RegisterWindow() {
               </div>
             </div>
 
-            {showErrorMsg && confirmPassword !== "" && password !== "" ? <span className="flex justify-center text-red-500 font-bold sm:text-sm"> Passwords do not match </span> : ""}
+            {showErrorMsgPassword && confirmPassword !== "" && password !== "" ? <span className="flex justify-center text-red-500 font-bold sm:text-sm"> Passwords do not match </span> : ""}
             
             <div>
               <button
