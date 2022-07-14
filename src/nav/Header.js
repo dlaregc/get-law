@@ -1,17 +1,30 @@
-import React, {useContext, createContext} from "react";
+import React, {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
 import {auth, logout} from "../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 import {BookOpenIcon} from "@heroicons/react/solid"; // put into header later
 
 function Header() {
 
-    let user = auth.currentUser;
+    const [user, loading, error] = useAuthState(auth);
+    const [userLoggedIn, setUserLoggedIn] = useState(false);
+
+    useEffect(() => {
+        if (user == null) {
+            setUserLoggedIn(false);
+        } else {
+            setUserLoggedIn(true);
+        }
+    }, [user])
 
     return (
-        <div className="static w-full flex justify-between p-4 items-center bg-blue-400">
-            <div>
-                <NavLink to="/" className=" text-5xl text-white font-bold text-center uppercase drop-shadow-lg hover:no-underline hover:text-6xl">
-                    getlaw
+        <div className="static w-full flex justify-between p-4 items-center bg-gradient-to-b from-neutral-800 to-stone-900">
+            <div className="hover:scale-110">
+                <NavLink to="/" className="hover:no-underline">
+                    <span className="text-5xl text-white font-bold text-center uppercase drop-shadow-lg align-middle">
+                        getlaw
+                    </span>
+                    <BookOpenIcon className="inline-flex align-middle h-20 w-20 text-white m-1" />
                 </NavLink>
             </div>
 
@@ -22,17 +35,14 @@ function Header() {
                         <NavLink to = "/" className="hover:text-blue-600 hover:no-underline">Home</NavLink>
                         <NavLink to = "/marketplace" className="hover:text-blue-600 hover:no-underline">Marketplace</NavLink>
                         {
-                            user &&
+                            userLoggedIn ? 
                             <>
                                 <NavLink to = "/profile" className="hover:text-blue-600 hover:no-underline">Profile</NavLink>
                                 <NavLink to = "/" onClick={logout} className="hover:text-blue-600 hover:no-underline">Logout</NavLink>
-                            </>
-                        }
-                        {
-                            !user && 
+                            </> :
                             <>
                                 <NavLink to="/login" className="hover:text-blue-600 hover:no-underline">Login</NavLink>
-                                <NavLink to="/register" className="hover:text-blue-600 hover:no-underline">Register</NavLink>
+                                <NavLink to="/registration-directory" className="hover:text-blue-600 hover:no-underline">Register</NavLink>
                             </>
                         }
                     </li>

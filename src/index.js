@@ -1,12 +1,13 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import { createRoot } from 'react-dom/client';
 
 import App from "./App";
 import Marketplace from "./pages/marketplace/Marketplace";
 import Login from "./pages/login/Login";
-import Register from "./pages/register/Register";
+import RegistrationDirectory from "./pages/register/RegistrationDirectory";
+import LawyerRegistration from "./pages/register/LawyerRegistration";
+import ClientRegistration from "./pages/register/ClientRegistration";
 
 // ReactDOM.render(
 //     <Router>
@@ -30,7 +31,9 @@ root.render(
         <Route path = "/" element = {<App />} />
         <Route path = "/marketplace" element = {<Marketplace />} />
         <Route path = "/login" element = {<Login />} />
-        <Route path = "/register" element = {<Register/>} />
+        <Route path = "/registration-directory" element = {<RegistrationDirectory/>} />
+        <Route path = "/lawyer-registration" element={<LawyerRegistration/>} />
+        <Route path = "/client-registration" element={<ClientRegistration/>} />
       </Routes>
     </Router>,
   );
