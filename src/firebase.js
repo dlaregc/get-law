@@ -1,3 +1,4 @@
+import { setSelectionRange } from "@testing-library/user-event/dist/utils";
 import {initializeApp} from "firebase/app";
 
 import {
@@ -18,8 +19,6 @@ import {
     addDoc,
 } from "firebase/firestore";
 
-import "firebase/auth";
-
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMIAN,
@@ -37,6 +36,23 @@ const db = getFirestore(app); //database
 const logInWithEmailAndPassword = async(email, password) => {
     try {
         await signInWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+        console.error(err);
+        alert(err.message);
+    }
+};
+
+const registerLawyer = async(firstName, lastName, email, password) => {
+    try {
+        const res = await createUserWithEmailAndPassword(auth, email, password);
+        const user = res.user;
+        const fullName = firstName + " " + lastName;
+        await addDoc(collection(db, "users"), {
+            uid: user.uid,
+            fullName,
+            authProvider: "local",
+            email
+        });
     } catch (err) {
         console.error(err);
         alert(err.message);
@@ -83,6 +99,7 @@ export {
     sendPasswordReset,
     logInWithEmailAndPassword,
     logout,
+    registerLawyer,
 };
 
 export default app;
