@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from "react";
 import Footer from "../../nav/Footer";
 import Header from "../../nav/Header";
-import { registerLawyer, registerWithEmailAndPassword } from "../../firebase";
+import { registerLawyer } from "../../firebase";
+import ReactModal from "react-modal";
 
 
 function LawyerRegistration() {
@@ -16,25 +17,39 @@ function LawyerRegistration() {
     const [passwordsMatch, setPasswordMatch] = useState(false);
     const [emailMatch, setEmailMatch] = useState(false);
 
+    // Booleans for react modal
+    const [showModal, setShowModal] = useState(false);
+
     // useEffect for password match
-    // useEffect(() => {
-    //     if (password !== "" && confirmPassword !== "") {
+    useEffect(() => {
+        if (password !== "" && confirmPassword !== "") {
+            if (password === confirmPassword) {
+                setPasswordMatch(true);
+            } else {
+                setPasswordMatch(false);
+            }
+        } else {
+            setPasswordMatch(false);
+        }
+    }, [confirmPassword, password])
 
-    //     } else {
-    //         setPasswordMatch(false);
-    //     }
-    // })
-
-    const register = () => {
-        registerLawyer(firstName, lastName, email, password);
-    }
-
+    // useEffect for email match
+    useEffect(() => {
+        if (email !== "" && confirmEmail !== "") {
+            if (email === confirmEmail) {
+                setEmailMatch(true);
+            } else {
+                setEmailMatch(false);
+            }
+        } else {
+            setEmailMatch(false);
+        }
+    }, [email, confirmEmail])
 
     return (
         <>
             <Header/>
             <div className="flex h-screen w-screen bg-zinc-800" >
-                <img className="relative flex bg-cover grayscale mix-blend-overlay w-screen" src="/images/lawyer-registration-bg.jpg" alt="" />
                 <div className="absolute p-3">
                     <h1 className="text-white w-screen text-center text-4xl font-bold drop-shadow-lg"> 
                         Lawyer
@@ -42,7 +57,7 @@ function LawyerRegistration() {
                 </div>
                 <div className="flex absolute h-screen w-screen items-center justify-center">
                     <div className="mt-4">
-                        <div className="rounded-md">
+                        <div className="rounded-md space-y-4">
                             <div>
                                 <label className="text-white">
                                     First Name
@@ -50,7 +65,7 @@ function LawyerRegistration() {
                                 <input
                                     type="text"
                                     placeholder="First Name"
-                                    className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                                    className="appearance-none relative w-full px py-2 focus:border-cyan-300 border-2 placeholder-gray-500 text-gray-900 rounded-sm"
                                     autoComplete="First Name"
                                     value={firstName}
                                     onChange={(e) => setFirstName(e.target.value)} />
@@ -62,7 +77,7 @@ function LawyerRegistration() {
                                 <input
                                     type="text"
                                     placeholder="Last Name"
-                                    className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                                    className="appearance-none relative w-full px py-2 focus:border-cyan-300 border-2 placeholder-gray-500 text-gray-900 rounded-sm"
                                     autoComplete="Last Name"
                                     value={lastName}
                                     onChange={(e) => setLastName(e.target.value)} />
@@ -74,7 +89,7 @@ function LawyerRegistration() {
                                 <input
                                     type="email"
                                     placeholder="Email"
-                                    className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                                    className="appearance-none relative w-full px py-2 focus:border-cyan-300 border-2 placeholder-gray-500 text-gray-900 rounded-sm"
                                     autoComplete="Email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)} />
@@ -86,10 +101,13 @@ function LawyerRegistration() {
                                 <input
                                     type="email"
                                     placeholder="Confirm Email"
-                                    className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                                    className="appearance-none relative w-full px py-2 focus:border-cyan-300 border-2 placeholder-gray-500 text-gray-900 rounded-sm"
                                     autoComplete="Confirm Email"
                                     value={confirmEmail}
                                     onChange={(e) => setConfirmEmail(e.target.value)} />
+                                <div className="">
+                                    <p className="font-bold text-red-500">{emailMatch ? "" : "Email's do not match"}</p>
+                                </div>
                             </div>
                             <div>
                                 <label className="text-white">
@@ -98,7 +116,7 @@ function LawyerRegistration() {
                                 <input
                                     type="password"
                                     placeholder="Password"
-                                    className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                                    className="appearance-none relative w-full px py-2 focus:border-cyan-300 border-2 placeholder-gray-500 text-gray-900 rounded-sm"
                                     autoComplete="Password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)} />
@@ -110,21 +128,40 @@ function LawyerRegistration() {
                                 <input
                                     type="password"
                                     placeholder="Confirm Password"
-                                    className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                                    className="appearance-none relative w-full px py-2 focus:border-cyan-300 border-2 placeholder-gray-500 text-gray-900 rounded-sm"
                                     autoComplete="Confirm Password"
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)} />
+                                <div className="">
+                                    <p className="font-bold text-red-500">{passwordsMatch ? "" : "Password's do not match"}</p>
+                                </div>
                             </div>
                             <div>
                                 <button
                                 type=""
-                                onClick={() => registerLawyer(firstName, lastName, email, password)}
-                                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                onClick={() => {
+                                    if (firstName !== "" && lastName !== "" && passwordsMatch && emailMatch) {
+                                        registerLawyer(firstName, lastName, email, password);
+                                    } else {
+                                        setShowModal(true)
+                                    }}}
+                                className="appearance-none relative w-full px py-2 bg-white border-2 border-gray-500 placeholder-gray-500 text-gray-900 rounded-sm my-3 hover:font-bold hover:border-cyan-300">
                                     Register
                                 </button>
                             </div>
-                            
                         </div>
+                            <ReactModal isOpen={showModal} shouldCloseOnEsc={true} shouldCloseOnOverlayClick={true} onRequestClose={() => setShowModal(false)} className="bg-zinc-800 border-4 border-slate-500 w-1/2 h-1/2 flex justify-center translate-x-1/2 translate-y-1/2">
+                            <div className="flex place-items-center">
+                                <div className="flex place-content-center">
+                                    <p className="font-bold text-center text-4xl text-white drop-shadow-lg">
+                                        Your registration details are incomplete.
+                                    </p>
+                                    <button type="" onClick={() => setShowModal(false)} className="bg-white absolute text-2xl rounded-sm hover:border-4 hover:border-x-gray-500 w-16 h-12 font-bold translate-y-36">
+                                        Ok!
+                                    </button>
+                                </div>   
+                            </div>
+                        </ReactModal>                      
                     </div>
                 </div>
             </div>

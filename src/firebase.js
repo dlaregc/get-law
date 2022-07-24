@@ -49,6 +49,25 @@ const registerLawyer = async(firstName, lastName, email, password) => {
         const fullName = firstName + " " + lastName;
         await addDoc(collection(db, "users"), {
             uid: user.uid,
+            lawyer: true,
+            fullName,
+            authProvider: "local",
+            email
+        });
+    } catch (err) {
+        console.error(err);
+        alert(err.message);
+    }
+};
+
+const registerClient = async(firstName, lastName, email, password) => {
+    try {
+        const res = await createUserWithEmailAndPassword(auth, email, password);
+        const user = res.user;
+        const fullName = firstName + " " + lastName;
+        await addDoc(collection(db, "users"), {
+            uid: user.uid,
+            lawyer: false,
             fullName,
             authProvider: "local",
             email
@@ -100,6 +119,7 @@ export {
     logInWithEmailAndPassword,
     logout,
     registerLawyer,
+    registerClient,
 };
 
 export default app;

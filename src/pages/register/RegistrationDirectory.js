@@ -11,7 +11,7 @@ function RegistrationDirectory() {
             <Header/>
             <div className="grid grid-cols-8">
                 <div className="row-span-full h-screen col-span-4 col-start-1 flex justify-center bg-slate-900 hover:bg-slate-700 transition ease-in delay-100">
-                    <Link to="/client-registration" className="flex items-center justify-center w-full text-gray-500 text-7xl font-bold hover:scale-125 drop-shadow-lg hover:text-white hover:no-underline">
+                    <Link to="/register/client" className="flex items-center justify-center w-full text-gray-500 text-7xl font-bold hover:scale-125 drop-shadow-lg hover:text-white hover:no-underline">
                         <span className="text-center">
                             Client
                         </span>
@@ -19,7 +19,7 @@ function RegistrationDirectory() {
                     </Link>
                 </div>
                 <div className="row-span-full h-screen col-span-4 col-start-5 flex justify-center bg-zinc-900 hover:bg-zinc-700 transition ease-in delay-100">
-                    <Link to="/lawyer-registration" className="flex items-center justify-center w-full text-gray-500 text-7xl font-bold hover:scale-125 drop-shadow-lg hover:text-white hover:no-underline">
+                    <Link to="/register/lawyer" className="flex items-center justify-center w-full text-gray-500 text-7xl font-bold hover:scale-125 drop-shadow-lg hover:text-white hover:no-underline">
                         <span className="text-center">
                             Lawyer
                         </span>

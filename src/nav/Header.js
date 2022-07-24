@@ -42,7 +42,7 @@ function Header() {
                             </> :
                             <>
                                 <NavLink to="/login" className="hover:text-blue-600 hover:no-underline">Login</NavLink>
-                                <NavLink to="/registration-directory" className="hover:text-blue-600 hover:no-underline">Register</NavLink>
+                                <NavLink to="/register" className="hover:text-blue-600 hover:no-underline">Register</NavLink>
                             </>
                         }
                     </li>

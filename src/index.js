@@ -31,9 +31,9 @@ root.render(
         <Route path = "/" element = {<App />} />
         <Route path = "/marketplace" element = {<Marketplace />} />
         <Route path = "/login" element = {<Login />} />
-        <Route path = "/registration-directory" element = {<RegistrationDirectory/>} />
-        <Route path = "/lawyer-registration" element={<LawyerRegistration/>} />
-        <Route path = "/client-registration" element={<ClientRegistration/>} />
+        <Route path = "/register" element = {<RegistrationDirectory/>} />
+        <Route path = "/register/lawyer" element={<LawyerRegistration/>} />
+        <Route path = "/register/client" element={<ClientRegistration/>} />
       </Routes>
     </Router>,
   );
