@@ -20,7 +20,7 @@ export default function ProductProfile() {
     return (
         <>
             <Header/>
-            <div className="w-screen min-h-screen overflow-y-scroll bg-zinc-800">
+            <div className="w-screen overflow-y-scroll overflow-x-hidden pb-20 bg-zinc-800">
                 <div>
                     <div className="translate-x-20 space-y-8 translate-y-10">
                         <img 
