@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {NavLink, useNavigate} from "react-router-dom";
-import {auth, logInWithEmailAndPassword, signInWithGoogle} from "../../firebase";
+import {NavLink} from "react-router-dom";
+import {auth, logInWithEmailAndPassword} from "../../firebase";
 import {useAuthState} from "react-firebase-hooks/auth";
-
 import { LockClosedIcon } from '@heroicons/react/solid'
 
 export default function LoginWindow() {
@@ -10,19 +9,18 @@ export default function LoginWindow() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, loading, error] = useAuthState(auth);
-  const navigate = useNavigate();
 
   return (
     <>
-      <div className="flex h-screen items-center justify-center py-12 px-4 sm:px-4 lg:px-4 bg-white">
+      <div className="flex h-screen items-center justify-center py-12 px-4 sm:px-4 lg:px-4 bg-zinc-800">
         <div className="max-w-md w-full space-y-8">
           <div>
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            <h2 className="mt-6 text-center text-4xl font-extrabold text-white drop-shadow-lg ">
                 Sign in to your account
             </h2>
-            <p className="mt-2 text-center text-sm text-blue-600">
+            <p className="mt-2 text-center text-sm text-white">
               Or{' '}
-              <a href="/register" className="font-medium text-blue-600 hover:text-blue-400">
+              <a href="/register" className="font-medium text-cyan-300 hover:text-cyan-600">
                 sign up here
               </a>
             </p>
@@ -68,7 +66,7 @@ export default function LoginWindow() {
               <div className="flex items-center"/>
 
               <div className="text-sm">
-                <a href="/" className="font-medium text-blue-600 hover:text-blue-400">
+                <a href="/reset" className="font-medium text-cyan-300 hover:text-cyan-600">
                   Forgot your password?
                 </a>
               </div>
@@ -79,10 +77,10 @@ export default function LoginWindow() {
                 <button
                   type=""
                   onClick={() => logInWithEmailAndPassword(email, password)}
-                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                    <LockClosedIcon className="h-5 w-5 text-blue-600 group-hover:text-blue-400" aria-hidden="true" />
+                    <LockClosedIcon className="h-5 w-5 text-zinc-600 group-hover:text-zinc-800" aria-hidden="true" />
                   </span>
                   Sign in
                 </button>

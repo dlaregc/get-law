@@ -168,7 +168,7 @@ async function getLawyers() {
 const sendPasswordReset = async(email) => {
     try {
         await sendPasswordResetEmail(auth, email);
-        alert("Password reset link sent!");
+        alert("Reset email has been sent")
     } catch (err) {
         console.error(err);
         alert(err.message);

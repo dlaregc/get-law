@@ -1,14 +1,13 @@
-import {React, useState, useEffect} from "react"
-import Unauthorised from "../Error/Unauthorised";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../firebase";
-import LawyerProfile from "./LawyerProfile";
 import Header from "../../nav/Header";
 import Footer from "../../nav/Footer";
-import { getUserInfo } from "../../firebase";
-import ClientProfile from "./ClientProfile";
+import LawyerSettings from "./LawyerSettings";
+import { React, useState, useEffect } from "react";
+import { getUserInfo, auth } from "../../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import Unauthorised from "../Error/Unauthorised";
+import ClientSettings from "./ClientSettings";
 
-export default function Profile() {
+export default function ProfileSettings() {
 
     const [snap, setSnap] = useState([]);
     const [user, loading, error] = useAuthState(auth);
@@ -36,12 +35,14 @@ export default function Profile() {
 
     return (
         <>
-            <Header/>
-            {userLoggedIn ?
-                isLawyer ? <LawyerProfile /> : <ClientProfile />
-            :
-            <Unauthorised/>}
-            <Footer/>
+            <Header />
+                {userLoggedIn ? 
+                    isLawyer ? <LawyerSettings/> : <ClientSettings/>
+                    :
+                    <Unauthorised />
+                }
+            <Footer />
         </>
+        
     )
 }
