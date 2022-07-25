@@ -1,4 +1,3 @@
-import { setSelectionRange } from "@testing-library/user-event/dist/utils";
 import {initializeApp} from "firebase/app";
 
 import {
@@ -8,6 +7,8 @@ import {
     sendPasswordResetEmail,
     signOut,
     sendEmailVerification,
+    updateEmail,
+    updatePassword,
 } from "firebase/auth";
 
 import {
@@ -17,7 +18,19 @@ import {
     collection,
     where,
     addDoc,
+    setDoc,
+    doc,
+    getDoc,
+    data,
+    updateDoc,
 } from "firebase/firestore";
+
+import { 
+    getDownloadURL,
+    getStorage,
+    ref,
+    uploadBytesResumable
+} from "firebase/storage"
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -31,6 +44,23 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig); 
 const auth = getAuth(app); //authentication
 const db = getFirestore(app); //database
+const storage = getStorage(app); //storage
+
+// uploading profile picture
+const uploadProfilePicture = (file, uid) => {
+    if (!file) {
+        return;
+    }
+    const storageRef = ref(storage, "/users")
+    const d = doc(db, "users", uid);
+    uploadBytesResumable(storageRef, file).then((ss) => {
+        getDownloadURL(ss.ref).then((downloadURL) => {
+            updateDoc(d, {
+                photoURL: downloadURL
+            }).then(() => console.log(downloadURL))
+        })
+    })
+}
 
 // Login
 const logInWithEmailAndPassword = async(email, password) => {
@@ -42,17 +72,20 @@ const logInWithEmailAndPassword = async(email, password) => {
     }
 };
 
-const registerLawyer = async(firstName, lastName, email, password) => {
+const registerLawyer = async(firstName, lastName, company, email, password) => {
     try {
         const res = await createUserWithEmailAndPassword(auth, email, password);
         const user = res.user;
         const fullName = firstName + " " + lastName;
-        await addDoc(collection(db, "users"), {
-            uid: user.uid,
+        await setDoc(doc(db, "users", user.uid.toString()), {
             lawyer: true,
+            photoURL: "https://firebasestorage.googleapis.com/v0/b/get-law.appspot.com/o/default.png?alt=media&token=ad35be0d-a69b-4212-9ffa-6230450652dd",
             fullName,
             authProvider: "local",
-            email
+            email,
+            company,
+            bio: "",
+            uid: user.uid
         });
     } catch (err) {
         console.error(err);
@@ -65,27 +98,9 @@ const registerClient = async(firstName, lastName, email, password) => {
         const res = await createUserWithEmailAndPassword(auth, email, password);
         const user = res.user;
         const fullName = firstName + " " + lastName;
-        await addDoc(collection(db, "users"), {
-            uid: user.uid,
+        await setDoc(doc(db, "users", user.uid.toString()), {
             lawyer: false,
             fullName,
-            authProvider: "local",
-            email
-        });
-    } catch (err) {
-        console.error(err);
-        alert(err.message);
-    }
-};
-
-// Registering
-const registerWithEmailAndPassword = async(name, email, password) => {
-    try {
-        const res = await createUserWithEmailAndPassword(auth, email, password);
-        const user = res.user;
-        await addDoc(collection(db, "users"), {
-            uid: user.uid,
-            name,
             authProvider: "local",
             email,
         });
@@ -94,6 +109,56 @@ const registerWithEmailAndPassword = async(name, email, password) => {
         alert(err.message);
     }
 };
+
+const updateCompanyAndBio = async(company = "", bio = "", uid) => {
+    const d = doc(db, "users", uid)
+    if (company === "" && bio === "") {
+        console.log("nothing")
+        return false;
+    }
+    if (company !== "" && bio !== "") {
+        const res = await updateDoc(d, {
+            company: company,
+            bio: bio,                
+        })
+        return true;
+    } else if (company !== "") {
+        const res = await updateDoc(d, {company: company});
+        return true;
+    } else if (bio !== "") {
+        const res = await updateDoc(d, {bio: bio});
+        return true;
+    } 
+}
+
+const updateEmailDocs = async(email, uid) => {
+    const d = doc(db, "users", uid) 
+    await updateDoc(d, {
+        email: email,
+    })
+}
+
+async function getUserInfo(uid) {
+    const docRef = doc(db, "users", uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+        const result = docSnap.data();
+        return result;
+    } else {
+        console.log("None")
+    }
+}
+
+async function getLawyers() {
+    const lawyerRef = collection(db, "users");
+    const q = query(lawyerRef, where("lawyer", "==", true));
+    let result = []
+    const snap = await getDocs(q);
+    snap.forEach((x) => {
+        result.push(x.data());
+    })
+    return result;
+}
 
 // Password reset
 const sendPasswordReset = async(email) => {
@@ -113,13 +178,16 @@ const logout = () => {
 
 export {
     auth,
+    app,
     db,
-    registerWithEmailAndPassword,
     sendPasswordReset,
     logInWithEmailAndPassword,
     logout,
     registerLawyer,
     registerClient,
+    getUserInfo,
+    getLawyers,
+    updateCompanyAndBio,
+    updateEmailDocs,
+    uploadProfilePicture,
 };
-
-export default app;

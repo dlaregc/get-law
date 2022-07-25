@@ -12,6 +12,7 @@ function LawyerRegistration() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
+    const [company, setCompany] = useState("")
     
     // Booleans to check password and email's match
     const [passwordsMatch, setPasswordMatch] = useState(false);
@@ -84,6 +85,18 @@ function LawyerRegistration() {
                             </div>
                             <div>
                                 <label className="text-white">
+                                    Company
+                                </label>
+                                <input
+                                    type="text"
+                                    placeholder="Company"
+                                    className="appearance-none relative w-full px py-2 focus:border-cyan-300 border-2 placeholder-gray-500 text-gray-900 rounded-sm"
+                                    autoComplete="Company"
+                                    value={company}
+                                    onChange={(e) => setCompany(e.target.value)} />
+                            </div>
+                            <div>
+                                <label className="text-white">
                                     Email
                                 </label>
                                 <input
@@ -140,8 +153,8 @@ function LawyerRegistration() {
                                 <button
                                 type=""
                                 onClick={() => {
-                                    if (firstName !== "" && lastName !== "" && passwordsMatch && emailMatch) {
-                                        registerLawyer(firstName, lastName, email, password);
+                                    if (firstName !== "" && lastName !== "" && company !== "" && passwordsMatch && emailMatch) {
+                                        registerLawyer(firstName, lastName, company, email, password);
                                     } else {
                                         setShowModal(true)
                                     }}}
@@ -150,7 +163,7 @@ function LawyerRegistration() {
                                 </button>
                             </div>
                         </div>
-                            <ReactModal isOpen={showModal} shouldCloseOnEsc={true} shouldCloseOnOverlayClick={true} onRequestClose={() => setShowModal(false)} className="bg-zinc-800 border-4 border-slate-500 w-1/2 h-1/2 flex justify-center translate-x-1/2 translate-y-1/2">
+                        <ReactModal isOpen={showModal} shouldCloseOnEsc={true} shouldCloseOnOverlayClick={true} onRequestClose={() => setShowModal(false)} className="bg-zinc-800 border-4 border-slate-500 w-1/2 h-1/2 flex justify-center translate-x-1/2 translate-y-1/2">
                             <div className="flex place-items-center">
                                 <div className="flex place-content-center">
                                     <p className="font-bold text-center text-4xl text-white drop-shadow-lg">

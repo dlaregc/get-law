@@ -8,6 +8,8 @@ import Login from "./pages/login/Login";
 import RegistrationDirectory from "./pages/register/RegistrationDirectory";
 import LawyerRegistration from "./pages/register/LawyerRegistration";
 import ClientRegistration from "./pages/register/ClientRegistration";
+import Profile from "./pages/profile/Profile";
+import ProductProfile from "./pages/marketplace/ProductProfile";
 
 // ReactDOM.render(
 //     <Router>
@@ -30,7 +32,9 @@ root.render(
       <Routes>
         <Route path = "/" element = {<App />} />
         <Route path = "/marketplace" element = {<Marketplace />} />
+        <Route path = "marketplace/:uid" element={<ProductProfile/>}/>
         <Route path = "/login" element = {<Login />} />
+        <Route path = "/profile" element = {<Profile />} />
         <Route path = "/register" element = {<RegistrationDirectory/>} />
         <Route path = "/register/lawyer" element={<LawyerRegistration/>} />
         <Route path = "/register/client" element={<ClientRegistration/>} />
