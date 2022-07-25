@@ -10,6 +10,7 @@ import LawyerRegistration from "./pages/register/LawyerRegistration";
 import ClientRegistration from "./pages/register/ClientRegistration";
 import Profile from "./pages/profile/Profile";
 import ProductProfile from "./pages/marketplace/ProductProfile";
+import FourZeroFour from "./pages/Error/FourZeroFour";
 
 // ReactDOM.render(
 //     <Router>
@@ -38,6 +39,7 @@ root.render(
         <Route path = "/register" element = {<RegistrationDirectory/>} />
         <Route path = "/register/lawyer" element={<LawyerRegistration/>} />
         <Route path = "/register/client" element={<ClientRegistration/>} />
+        <Route path = "*" element={<FourZeroFour/>}/>
       </Routes>
     </Router>,
   );
