@@ -32,17 +32,17 @@ function Header() {
 
                 <ul className="static gap-8 p-6">
                     <li className="space-x-4 uppercase text-2xl text-white font-bold drop-shadow-lg">
-                        <NavLink to = "/" className="hover:text-blue-600 hover:no-underline">Home</NavLink>
-                        <NavLink to = "/marketplace" className="hover:text-blue-600 hover:no-underline">Marketplace</NavLink>
+                        <NavLink to = "/" className="hover:text-cyan-300 hover:no-underline">Home</NavLink>
+                        <NavLink to = "/marketplace" className="hover:text-cyan-300 hover:no-underline">Marketplace</NavLink>
                         {
                             userLoggedIn ? 
                             <>
-                                <NavLink to = "/profile" className="hover:text-blue-600 hover:no-underline">Profile</NavLink>
-                                <NavLink to = "/" onClick={logout} className="hover:text-blue-600 hover:no-underline">Logout</NavLink>
+                                <NavLink to = "/profile" className="hover:text-cyan-300 hover:no-underline">Profile</NavLink>
+                                <NavLink to = "/" onClick={logout} className="hover:text-cyan-300 hover:no-underline">Logout</NavLink>
                             </> :
                             <>
-                                <NavLink to="/login" className="hover:text-blue-600 hover:no-underline">Login</NavLink>
-                                <NavLink to="/register" className="hover:text-blue-600 hover:no-underline">Register</NavLink>
+                                <NavLink to="/login" className="hover:text-cyan-300 hover:no-underline">Login</NavLink>
+                                <NavLink to="/register" className="hover:text-cyan-300 hover:no-underline">Register</NavLink>
                             </>
                         }
                     </li>
