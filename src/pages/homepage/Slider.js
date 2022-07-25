@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 function Slider() {
     return (
         <div className="bg-zinc-800 h-screen w-screen flex justify-center overflow-y-hidden overflow-x-hidden">
-            <div className="translate-y-1/2 text-center">
+            <div className="translate-y-1/4 text-center mb-4">
                 <h1 className="text-9xl font-bold text-white drop-shadow-lg uppercase">
                     GETLAW
                 </h1>
