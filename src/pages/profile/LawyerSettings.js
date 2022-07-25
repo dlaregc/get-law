@@ -181,6 +181,10 @@ function LawyerSettings() {
                                 onChange={(e) => setEmail(e.target.value)} />
                             <button type="" 
                                     onClick={async() => {
+                                        if (email==="") {
+                                            alert("Please enter email!");
+                                            return;
+                                        }
                                         await updateEmail(email).then(() => {
                                             if (!error2 && !updating1) {
                                                 updateEmailDocs(email, user.uid).then(() => {

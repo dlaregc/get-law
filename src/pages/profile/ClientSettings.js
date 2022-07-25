@@ -121,7 +121,11 @@ export default function ClientSettings() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)} />
                             <button type="" 
-                                    onClick={async() => {
+                                    onClick={async(email) => {
+                                        if (email === "") {
+                                            alert("please enter email");
+                                            return;
+                                        }
                                         await updateEmail(email).then(() => {
                                             if (!error2 && !updating1) {
                                                 updateEmailDocs(email, user.uid).then(() => {

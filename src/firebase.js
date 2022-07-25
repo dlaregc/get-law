@@ -118,7 +118,8 @@ const updateCompanyAndBio = async(company = "", bio = "", uid) => {
     const d = doc(db, "users", uid)
     if (company === "" && bio === "") {
         console.log("nothing")
-        return false;
+        console.alert("Please enter details!")
+        return;
     }
     if (company !== "" && bio !== "") {
         const res = await updateDoc(d, {
