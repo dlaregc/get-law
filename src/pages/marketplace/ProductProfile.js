@@ -21,33 +21,31 @@ export default function ProductProfile() {
         <>
             <Header/>
             <div className="w-screen min-h-screen overflow-y-scroll bg-zinc-800">
-                <div classname="">
-                    <div className="h-80 w-64 mt-10 ml-14">
-                        {/* <img 
+                <div>
+                    <div className="translate-x-20 space-y-8 translate-y-10">
+                        <img 
                             src={snap.photoURL} 
                             alt=""
-                            className="border-2"
-                        /> */}
+                            className="border-2 h-80 w-64"
+                        />
                         <div classname="">
-                            <h1 className="text-white font-bold text-4xl">
+                            <h1 className="text-white font-bold text-7xl">
                                 {snap.fullName}
                             </h1>
                         </div>
-                    </div>
-                    <div classname="">
-                        <div>
-                            <h1 classname="text-white font-bold text-4xl">
-                                {snap.company}
+                        <div className="mt-5">
+                            <h1 className="text-white font-bold text-xl">
+                               Company: {snap.company}
+                            </h1>
+                        </div>
+                        <div className="mt-5">
+                            <h1 className="text-white text-xl">
+                                Contact me at: {snap.email}
                             </h1>
                         </div>
                         <div>
-                            <h1 classname="text-white font-bold text-4xl">
-                                {snap.email}
-                            </h1>
-                        </div>
-                        <div>
-                            <p classname="text-white font-bold text-4xl">
-                                {snap.bio}
+                            <p className="w-1/2 text-white">
+                                Bio: {snap.bio}
                             </p>
                         </div>
                     </div>

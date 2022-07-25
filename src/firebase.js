@@ -46,15 +46,19 @@ const auth = getAuth(app); //authentication
 const db = getFirestore(app); //database
 const storage = getStorage(app); //storage
 
+const metadata = {
+    contentType: "image/jpeg",
+};
+
 // uploading profile picture
 const uploadProfilePicture = (file, uid) => {
     if (!file) {
         return;
     }
-    const storageRef = ref(storage, "/users")
+    const storageRef = ref(storage,"users/" + uid + ".jpg")
     const d = doc(db, "users", uid);
-    uploadBytesResumable(storageRef, file).then((ss) => {
-        getDownloadURL(ss.ref).then((downloadURL) => {
+    uploadBytesResumable(storageRef, file, metadata).then((ss) => {
+        getDownloadURL(ss.ref).then(async(downloadURL) => {
             updateDoc(d, {
                 photoURL: downloadURL
             }).then(() => console.log(downloadURL))
