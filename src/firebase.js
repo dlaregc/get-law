@@ -29,7 +29,8 @@ import {
     getDownloadURL,
     getStorage,
     ref,
-    uploadBytesResumable
+    uploadBytesResumable,
+    uploadBytes
 } from "firebase/storage"
 
 const firebaseConfig = {
@@ -52,12 +53,17 @@ const metadata = {
 
 // uploading profile picture
 const uploadProfilePicture = (file, uid) => {
+    // const file = document.getElementById("uploadJPG").src
     if (!file) {
         return;
     }
+    const blob = new Blob([file], {type: "image/jpeg"})
+    console.log(file);
     const storageRef = ref(storage,"users/" + uid + ".jpg")
+    // console.log(file[0].size);
     const d = doc(db, "users", uid);
-    uploadBytesResumable(storageRef, file, metadata).then((ss) => {
+    console.log(blob.size);
+    uploadBytes(storageRef, blob, metadata).then((ss) => {
         getDownloadURL(ss.ref).then(async(downloadURL) => {
             updateDoc(d, {
                 photoURL: downloadURL

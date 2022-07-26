@@ -77,8 +77,12 @@ function LawyerSettings() {
                             <input
                                 type="file"
                                 accept=".jpg"
+                                id="uploadJPG"
                                 className="appearance-none relative px py-2 focus:border-cyan-300 border-2 placeholder-gray-500 text-gray-900 rounded-sm bg-slate-50 flex align-text-bottom"
-                                onChange={(e) => setFile(e.target.value)} />
+                                onChange={(e) => {
+                                    if (e.target.files && e.target.files[0]) {
+                                        setFile(e.target.files[0])
+                                    }}} />
                             <button type="" 
                                 onClick={() => uploadProfilePicture(file, user.uid)}
                                 className="bg-white text-black rounded-sm w-52 h-10 text-bold hover:border-4 hover:border-x-gray-500 hover:font-bold">
