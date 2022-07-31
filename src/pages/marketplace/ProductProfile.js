@@ -24,60 +24,62 @@ export default function ProductProfile() {
         <>
             <Header/>
             <div className="w-screen h-screen overflow-y-scroll overflow-x-hidden pb-20 bg-zinc-800">
-                <div className="flex px-28 pt-20">
-                    <div className="">
-                        <img 
-                            src={snap.photoURL} 
-                            alt=""
-                            className="object-contain h-5/6"
-                        />
-                    </div>
-                    <div className="h-auto space-y-20">
-                        <div classname="">
-                            <h1 className="text-white font-bold uppercase text-5xl drop-shadow-lg">
-                                {snap.fullName}
-                            </h1>
+                <div className="space-y-20">
+                    <div className="flex px-28 pt-20">
+                        <div className="w-1/2 h-4/6">
+                            <img 
+                                src={snap.photoURL} 
+                                alt=""
+                                className="object-cover"
+                            />
                         </div>
-                        <div className="text-white text-xl drop-shadow-lg">
-                            <h1 className="font-bold">
-                                Company: 
-                            </h1>
-                            <h2>
-                                {snap.company}
-                            </h2>
-                        </div>
-                        <div className="text-white text-xl drop-shadow-lg">
-                            <h1 className="font-bold">
-                                Contact me at:
-                            </h1>
-                            <h2>
-                                {snap.company}
-                            </h2>
-                        </div>
-                    </div>
-                </div>
-                <div className="align-top px-28 space-y-20">
-                    <div>
-                        <h1 className="text-white text-xl drop-shadow-lg font-bold">
-                            Expertise:
-                        </h1>
-                        <div className="space-y-5">
-                            {
-                                expertiseList.filter((x) => x.bool).map((y) => (
-                                    <h2 className="text-white">
-                                        {y.type} 
-                                    </h2>
-                                ))
-                            }
+                        <div className="space-y-72 w-1/2 h-auto flex-col text-center">
+                            <div classname="">
+                                <h1 className="text-white font-bold uppercase text-5xl drop-shadow-lg">
+                                    {snap.fullName}
+                                </h1>
+                            </div>
+                            <div className="text-white text-xl drop-shadow-lg">
+                                <h1 className="font-bold">
+                                    Company: 
+                                </h1>
+                                <h2>
+                                    {snap.company}
+                                </h2>
+                            </div>
+                            <div className="text-white text-xl drop-shadow-lg">
+                                <h1 className="font-bold">
+                                    Contact me at:
+                                </h1>
+                                <h2>
+                                    {snap.company}
+                                </h2>
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        <h1 className="text-white text-xl drop-shadow-lg font-bold">
-                            Bio:     
-                        </h1>
-                        <p className="text-white">
-                            {snap.bio}
-                        </p>
+                    <div className="align-top px-28 space-y-20">
+                        <div>
+                            <h1 className="text-white text-xl drop-shadow-lg font-bold">
+                                Expertise:
+                            </h1>
+                            <div className="space-y-5">
+                                {
+                                    expertiseList.filter((x) => x.bool).map((y) => (
+                                        <h2 className="text-white">
+                                            {y.type} 
+                                        </h2>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                        <div>
+                            <h1 className="text-white text-xl drop-shadow-lg font-bold">
+                                Bio:     
+                            </h1>
+                            <p className="text-white">
+                                {snap.bio}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
