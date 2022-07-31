@@ -1,11 +1,29 @@
 import React from "react";
 import { useAuthState, useUpdatePassword, useUpdateEmail } from "react-firebase-hooks/auth";
-import { auth, getUserInfo, updateCompanyAndBio, updateEmailDocs, uploadProfilePicture } from "../../firebase";
+import { auth, getUserInfo, updateCompanyAndBio, updateEmailDocs, uploadProfilePicture, updateExpertiseList, getLawyerExpertise, getLawyers } from "../../firebase";
 import { useState, useEffect } from "react";
 import Unauthorised from "../Error/Unauthorised";
 import ReactModal from "react-modal";
+import { async } from "@firebase/util";
 
 function LawyerSettings() {
+
+    // const expertiseList = [
+    //     {type: "Alternative Dispute Resolution", bool: false},
+    //     {type: "Building & Construction", bool: false},
+    //     {type: "Civil", bool: false},
+    //     {type: "Conveyancing", bool: false},
+    //     {type: "Corporate", bool: false},
+    //     {type: "Criminal Law", bool: false},
+    //     {type: "Cybersecutity & Data Protection", bool: false},
+    //     {type: "Family Law", bool: false},
+    //     {type: "Intellectual Property", bool: false},
+    //     {type: "Family Law", bool: false},
+    //     {type: "Insolvency", bool: false},
+    //     {type: "Muslim Law", bool: false},
+    //     {type: "Personal Injury & Property Damage", bool: false},
+    //     {type: "Probate & Succession Planning", bool: false},
+    // ]
     
     const [email, setEmail] = useState("")
     const [company, setCompany] = useState("")
@@ -26,6 +44,8 @@ function LawyerSettings() {
     const [userLoggedIn, setUserLoggedIn] = useState(false);
     const [updatePassword, updating2, error3] = useUpdatePassword(auth);
 
+    const [expertiseList, setExpertiseList] = useState([]);
+    const [expertiseUpdated, setExpertiseUpdated] = useState(false);
 
     useEffect(() => {
         if (user !== null) {
@@ -39,7 +59,9 @@ function LawyerSettings() {
         const fetch = async () => {
             if (user) {
                 const data = await getUserInfo(user.uid);
+                const expertise = await getLawyerExpertise(user.uid);
                 setSnap(data);
+                setExpertiseList(expertise);
             }
         }
         fetch();
@@ -74,6 +96,13 @@ function LawyerSettings() {
                             <label className="text-white flex align-text-bottom">
                                 Upload profile picture
                             </label>
+                            <div className="h-1/5 w-1/5">
+                                <img 
+                                    src={snap.photoURL}
+                                    alt=""
+                                    className="object-scale-down"
+                                />
+                            </div>
                             <input
                                 type="file"
                                 accept=".jpg"
@@ -90,6 +119,7 @@ function LawyerSettings() {
                             </button>
                         </div>
                     </div>
+
                     <div className="space-y-6">
                         <div>
                             <label className="text-white">
@@ -124,6 +154,33 @@ function LawyerSettings() {
                                 Update details
                             </button>
                         </div>
+                    </div>
+
+                    <div className="">
+                        <label className="text-white">
+                                Legal Expertise
+                        </label>
+                        <form>
+                            {expertiseList.map((x, index) => (
+                                    <div key={index}>
+                                        <input
+                                            type="checkbox"
+                                            defaultChecked={x.bool}
+                                            className="appearance-none relative placeholder-gray-500 text-gray-900 rounded-sm"
+                                            onChange={() => {x.bool = !x.bool}}
+                                            />
+                                        <label className="text-white ml-3">
+                                            {x.type}
+                                        </label>
+                                    </div>  
+                                ))}      
+                        </form>
+                        <button className="bg-white text-black rounded-sm w-52 h-10 translate-y-5 text-bold hover:border-4 hover:border-x-gray-500 hover:font-bold"
+                                onClick={() => {
+                                    updateExpertiseList(expertiseList, user.uid).then((x) => setExpertiseUpdated(x))
+                                }}>
+                            Update expertise
+                        </button>
                     </div>
 
                     <div className="space-y-6">
@@ -204,10 +261,11 @@ function LawyerSettings() {
                         </div>
                     </div>
                 </div>
-                <ReactModal isOpen={emailUpdated || canUpdate || passwordUpdated} shouldCloseOnEsc={true} shouldCloseOnOverlayClick={true} onRequestClose={() => {
+                <ReactModal isOpen={emailUpdated || canUpdate || passwordUpdated || expertiseUpdated} shouldCloseOnEsc={true} shouldCloseOnOverlayClick={true} onRequestClose={() => {
                     setEmailUpdated(false)
                     setCanUpdate(false)
                     setPasswordUpdated(false)
+                    setExpertiseUpdated(false)
                     }} className="bg-zinc-800 border-4 border-slate-500 w-1/2 h-1/2 flex justify-center translate-x-1/2 translate-y-1/2">
                             <div className="flex place-items-center">
                                 <div className="flex place-content-center">
@@ -218,6 +276,7 @@ function LawyerSettings() {
                                                             setEmailUpdated(false)
                                                             setCanUpdate(false)
                                                             setPasswordUpdated(false)
+                                                            setExpertiseUpdated(false)
                                                             }} className="bg-white absolute text-2xl rounded-sm hover:border-4 hover:border-x-gray-500 w-16 h-12 font-bold translate-y-36">
                                         Ok!
                                     </button>

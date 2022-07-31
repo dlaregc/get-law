@@ -95,7 +95,23 @@ const registerLawyer = async(firstName, lastName, company, email, password) => {
             email,
             company,
             bio: "",
-            uid: user.uid
+            uid: user.uid,
+            expertise: [
+                {type: "Alternative Dispute Resolution", bool: false},
+                {type: "Building & Construction", bool: false},
+                {type: "Civil", bool: false},
+                {type: "Conveyancing", bool: false},
+                {type: "Corporate", bool: false},
+                {type: "Criminal Law", bool: false},
+                {type: "Cybersecutity & Data Protection", bool: false},
+                {type: "Family Law", bool: false},
+                {type: "Intellectual Property", bool: false},
+                {type: "Family Law", bool: false},
+                {type: "Insolvency", bool: false},
+                {type: "Muslim Law", bool: false},
+                {type: "Personal Injury & Property Damage", bool: false},
+                {type: "Probate & Succession Planning", bool: false},
+        ],
         });
     } catch (err) {
         console.error(err);
@@ -119,6 +135,14 @@ const registerClient = async(firstName, lastName, email, password) => {
         alert(err.message);
     }
 };
+
+const updateExpertiseList = async(records, uid) => {
+    const d = doc(db, "users", uid)
+    await updateDoc(d, {
+        expertise: records,
+    })
+    return true; 
+}
 
 const updateCompanyAndBio = async(company = "", bio = "", uid) => {
     const d = doc(db, "users", uid)
@@ -157,6 +181,16 @@ async function getUserInfo(uid) {
         return result;
     } else {
         console.log("None")
+    }
+}
+
+const getLawyerExpertise = async (uid) => {
+    const docRef = doc(db, "users", uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+        return docSnap.data().expertise;
+    } else {
+        console.log("None");
     }
 }
 
@@ -201,4 +235,6 @@ export {
     updateCompanyAndBio,
     updateEmailDocs,
     uploadProfilePicture,
+    updateExpertiseList,
+    getLawyerExpertise,
 };

@@ -37,7 +37,7 @@ export default function ProfileSettings() {
         <>
             <Header />
                 {userLoggedIn ? 
-                    isLawyer ? <LawyerSettings/> : <ClientSettings/>
+                    isLawyer ? <LawyerSettings /> : <ClientSettings />
                     :
                     <Unauthorised />
                 }

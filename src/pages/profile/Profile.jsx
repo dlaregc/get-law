@@ -38,7 +38,7 @@ export default function Profile() {
         <>
             <Header/>
             {userLoggedIn ?
-                isLawyer ? <LawyerProfile /> : <ClientProfile />
+                isLawyer ? <LawyerProfile defer/> : <ClientProfile defer/>
             :
             <Unauthorised/>}
             <Footer/>

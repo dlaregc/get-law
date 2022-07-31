@@ -2,17 +2,20 @@ import { React, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Footer from "../../nav/Footer";
 import Header from "../../nav/Header";
-import { getUserInfo } from "../../firebase";
+import { getUserInfo, getLawyerExpertise } from "../../firebase";
 
 export default function ProductProfile() {
 
     const {uid} = useParams();
     const [snap, setSnap] = useState([]);
+    const [expertiseList, setExpertiseList] = useState([]);
 
     useEffect(() => {
         const fetch = async() => {
             const data = await getUserInfo(uid);
+            const e = await getLawyerExpertise(uid);
             setSnap(data);
+            setExpertiseList(e)
         }
         fetch();
     }, [])
@@ -20,34 +23,61 @@ export default function ProductProfile() {
     return (
         <>
             <Header/>
-            <div className="w-screen overflow-y-scroll overflow-x-hidden pb-20 bg-zinc-800">
-                <div>
-                    <div className="translate-x-20 space-y-8 translate-y-10">
+            <div className="w-screen h-screen overflow-y-scroll overflow-x-hidden pb-20 bg-zinc-800">
+                <div className="flex px-28 pt-20">
+                    <div className="">
                         <img 
                             src={snap.photoURL} 
                             alt=""
-                            className="border-2 h-80 w-64"
+                            className="object-contain h-5/6"
                         />
+                    </div>
+                    <div className="h-auto space-y-20">
                         <div classname="">
-                            <h1 className="text-white font-bold text-7xl">
+                            <h1 className="text-white font-bold uppercase text-5xl drop-shadow-lg">
                                 {snap.fullName}
                             </h1>
                         </div>
-                        <div className="mt-5">
-                            <h1 className="text-white font-bold text-xl">
-                               Company: {snap.company}
+                        <div className="text-white text-xl drop-shadow-lg">
+                            <h1 className="font-bold">
+                                Company: 
                             </h1>
+                            <h2>
+                                {snap.company}
+                            </h2>
                         </div>
-                        <div className="mt-5">
-                            <h1 className="text-white text-xl">
-                                Contact me at: {snap.email}
+                        <div className="text-white text-xl drop-shadow-lg">
+                            <h1 className="font-bold">
+                                Contact me at:
                             </h1>
+                            <h2>
+                                {snap.company}
+                            </h2>
                         </div>
-                        <div>
-                            <p className="w-1/2 text-white">
-                                Bio: {snap.bio}
-                            </p>
+                    </div>
+                </div>
+                <div className="align-top px-28 space-y-20">
+                    <div>
+                        <h1 className="text-white text-xl drop-shadow-lg font-bold">
+                            Expertise:
+                        </h1>
+                        <div className="space-y-5">
+                            {
+                                expertiseList.filter((x) => x.bool).map((y) => (
+                                    <h2 className="text-white">
+                                        {y.type} 
+                                    </h2>
+                                ))
+                            }
                         </div>
+                    </div>
+                    <div>
+                        <h1 className="text-white text-xl drop-shadow-lg font-bold">
+                            Bio:     
+                        </h1>
+                        <p className="text-white">
+                            {snap.bio}
+                        </p>
                     </div>
                 </div>
             </div>
